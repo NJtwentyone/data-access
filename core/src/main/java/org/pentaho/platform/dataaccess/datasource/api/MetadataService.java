@@ -46,6 +46,7 @@ import org.pentaho.platform.dataaccess.datasource.wizard.service.ConnectionServi
 import org.pentaho.platform.dataaccess.datasource.wizard.service.messages.Messages;
 import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
 import org.pentaho.platform.engine.core.system.PentahoSystem;
+import org.pentaho.platform.engine.services.metadata.MetadataImportPublisher;
 import org.pentaho.platform.plugin.services.importer.IPlatformImporter;
 import org.pentaho.platform.plugin.services.importer.PlatformImportException;
 import org.pentaho.platform.plugin.services.importer.RepositoryFileImportBundle;
@@ -232,7 +233,7 @@ public class MetadataService extends DatasourceService {
     IPlatformImporter importer = getImporter();
     importer.importFile( bundle );
     IPentahoSession pentahoSession = getSession();
-    publish( pentahoSession );
+    publish( pentahoSession ); // FIXME is this necessary since
   }
 
   public boolean isContainsModel( String tempFileName ) throws Exception {
@@ -330,7 +331,7 @@ public class MetadataService extends DatasourceService {
   }
 
   protected void publish( IPentahoSession pentahoSession ) throws InterruptedException {
-    PentahoSystem.publish( pentahoSession, org.pentaho.platform.engine.services.metadata.MetadataPublisher.class.getName() );
+    PentahoSystem.publish( pentahoSession, MetadataImportPublisher.class.getName() ); // DEBUG change to MetadataImportPublisher
   }
 
   protected IPentahoSession getSession() throws InterruptedException {
