@@ -234,7 +234,11 @@ public class MetadataService extends DatasourceService {
     IPlatformImporter importer = getImporter();
     importer.importFile( bundle );
     IPentahoSession pentahoSession = getSession();
-    publish( pentahoSession ); // FIXME is this necessary since
+    //publish( pentahoSession ); // FIXME is this necessary since
+    // DEBUG calling reload/refresh here instead of from MetadataPublisher to see if UI gets updated... it does
+    // INVESTIGATE any hooks in UI or race condition in cache
+    metadataDomainRepository.reloadDomains();
+
   }
 
   public boolean isContainsModel( String tempFileName ) throws Exception {
